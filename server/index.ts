@@ -23,11 +23,14 @@ const hash = () => {
 
 console.log(hash());
 
+const offset = 0;
+//const max = 1493;
+
 app.get("/api/characters", async (_, res) => {
   const { ts, md5 } = hash();
   await axios
     .get(
-      `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=16a6b47628b562a9c4c463669e71377b&hash=${md5}`
+      `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=16a6b47628b562a9c4c463669e71377b&hash=${md5}&limit=100&offset=${offset}`
     )
     .then((x) => res.json(x.data.data.results))
     .catch((e: AxiosError) =>
@@ -36,3 +39,7 @@ app.get("/api/characters", async (_, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
+
+// set a variable equal to get a way to get total number of heros
+//take the limit and loop by limit devided max number per page
+//
